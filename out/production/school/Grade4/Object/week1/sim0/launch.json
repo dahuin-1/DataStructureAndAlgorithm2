@@ -1,0 +1,13 @@
+{
+  "version": "0.2.0",
+  "configurations" : [
+    {
+      "type" : "java",
+      "name" : "CodeLens (Launch) - Simulator",
+      "request" : "launch",
+      "mainClass" : "Simulator",
+      "projectName" : "project_fb8f5f98",
+      "args" : "BMW2"
+    }
+  ]
+}

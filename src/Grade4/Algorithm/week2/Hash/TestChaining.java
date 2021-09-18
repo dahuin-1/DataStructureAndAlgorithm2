@@ -12,7 +12,6 @@ public class TestChaining {
     public static void main(String[] args) {
         int[] data = new int[dataSize];
         HashSet<Integer> rdata = new HashSet<Integer>();
-
         while (rdata.size() < dataSize) {
             rdata.add((int)(Math.random()*maxKeyValue));
         }
@@ -21,21 +20,13 @@ public class TestChaining {
             data[k] = d;
             k++;
         }
-
-        //Chaining
-
-        //Insert
-
         int sumOfSuccess = 0;
         int sumOfFailure = 0;
-
         System.out.println(">>> Chaining");
         Chaining myHash = new Chaining(chainingTableSize);
         int repeat = dataSize / interval;
         for(int j = 0; j < repeat; j++) {
             int start = j * interval;
         }
-
     }
-
 }

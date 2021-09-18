@@ -23,14 +23,8 @@ public class TestOpenAddLinear {
             data[k] = d;
             k++;
         }
-
-        //Open Addressing Linear
-
-        //Insert
-
         int sumOfSuccess = 0;
         int sumOfFailure = 0;
-
         System.out.println(">>> OpenAddressing-Linear");
         OpenAddLinear myHash = new OpenAddLinear(chainingTableSize);
         int repeat = dataSize / interval;
@@ -102,3 +96,23 @@ public class TestOpenAddLinear {
                 + " Average Hop Count = " + ((double) -sumOfFailure / failCount));
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

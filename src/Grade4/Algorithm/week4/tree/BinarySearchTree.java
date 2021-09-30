@@ -35,7 +35,7 @@ public class BinarySearchTree {
         insert(x, null, root);
     }
 
-    private Node insert(char x, Node parent, Node currentNode) {
+    protected Node insert(char x, Node parent, Node currentNode) {
         if (currentNode == null) {
             if (parent == null) { //root
                 root = insertNode(x, null);
@@ -194,7 +194,7 @@ public class BinarySearchTree {
         return height(root);
     }
 
-    private int height(Node currentNode) {
+    protected int height(Node currentNode) {
         if(currentNode==null) {
             return -1;
         }

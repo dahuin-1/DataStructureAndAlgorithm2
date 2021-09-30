@@ -156,7 +156,7 @@ public class BinarySearchTree {
         int depthLevel = 0;
         while (q.peek() != null) {
             Deque<Node> temp = new ArrayDeque<Node> ();
-            System.out.print("\nDepth-level" + depthLevel+ "  :  ");
+            System.out.print("Depth-level" + depthLevel+ "  :  ");
             while (q.peek() != null) {
                 temp.add(q.poll());
             }

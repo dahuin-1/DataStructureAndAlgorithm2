@@ -1,6 +1,8 @@
 package Grade4.Algorithm.week4.tree;
 
 
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 public class BinarySearchTree {
 
@@ -18,10 +20,9 @@ public class BinarySearchTree {
         }
         public String toString() {
             String retVal = "";
-            return retVal + key;
+            return retVal + key + "(" + height(this) + ")";
         }
     }
-
     Node root;
     int numNode;
 
@@ -147,6 +148,32 @@ public class BinarySearchTree {
     }
 
     public void showTree() {
+        if(root==null) {
+            return;
+        }
+        Deque<Node> q = new ArrayDeque<>();
+        q.add(root);
+        int depthLevel = 0;
+        while (q.peek() != null) {
+            Deque<Node> temp = new ArrayDeque<Node> ();
+            System.out.print("\nDepth-level" + depthLevel+ "  :  ");
+            while (q.peek() != null) {
+                temp.add(q.poll());
+            }
+            while (temp.peek() != null) {
+                Node e = temp.poll();
+                System.out.print(e.toString()+" ");
+                if(e.left != null)
+                    q.add(e.left);
+                if(e.right != null)
+                    q.add(e.right);
+            }
+            System.out.println();
+            depthLevel++;
+        }
+
+
+
         System.out.println(toString(root));
     }
 
@@ -158,13 +185,40 @@ public class BinarySearchTree {
         if (t==null)
             return "";
         else
-            return inorder(t.left)+" "+t.key+" "+inorder(t.right);
+            return inorder(t.left)+" "+t.toString()+" "+inorder(t.right);
     }
 
-    /////////////////////////////////
+    //////////////////////////////////////////////////////////////////
+
+    public int height() {
+        return height(root);
+    }
+
+    private int height(Node currentNode) {
+        if(currentNode==null) {
+            return -1;
+        }
+        else {
+            return 1 + Math.max(height(currentNode.left), height(currentNode.right));
+        }
+    }
+
+    public int IPL() {
+        int count = 0;
+        return IPLCount(root, count);
+    }
+
+    private int IPLCount(Node r, int count) {
+        if(r==null)
+            return count;
+        count++;
+        int lCount = IPLCount(r.left, count);
+        int rCount = IPLCount(r.right, count);
+        return count + lCount + rCount;
+    }
 
 
-    /////////////////////////////////
+    //////////////////////////////////////////////////////////////////
 
     public static void main(String[] args) {
 

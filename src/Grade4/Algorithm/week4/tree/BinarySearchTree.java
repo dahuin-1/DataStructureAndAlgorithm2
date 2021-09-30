@@ -127,13 +127,15 @@ public class BinarySearchTree {
         }
     }
 
-    private Node getSuccessor(Node v) {
+    protected Node getSuccessor(Node v) {
         if (v == null)
             return null;
-        Node p = v.right;
-        while (p.left != null)
-            p = p.left;
-        return p;
+
+        Node current = v;
+       // Node p = v.right;
+        while (current.left != null)
+            current = current.left;
+        return current;
     }
 
     private Node predecessor(Node v) {

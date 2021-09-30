@@ -1,12 +1,11 @@
 package Grade4.Algorithm.week4.tree;
 
 
-import java.util.ArrayDeque;
-import java.util.Deque;
+import java.util.*;
 
 public class BinarySearchTree {
 
-    public class Node{
+    public class Node {
         char key;
         Node parent;
         Node left;
@@ -18,11 +17,13 @@ public class BinarySearchTree {
             left = null;
             right = null;
         }
+
         public String toString() {
             String retVal = "";
             return retVal + key + "(" + height(this) + ")";
         }
     }
+
     Node root;
     int numNode;
 
@@ -70,9 +71,9 @@ public class BinarySearchTree {
 
     public Node search(Node startNode, char x) {
         Node p = startNode;
-        if (p==null||p.key==x)
+        if (p == null || p.key == x)
             return p;
-        else if (x<p.key)
+        else if (x < p.key)
             return search(p.left, x);
         else
             return search(p.right, x);
@@ -83,22 +84,19 @@ public class BinarySearchTree {
         if (currentNode != null) {
             numNode--;
             return delete(currentNode);
-        }
-        else{
+        } else {
             return null;
         }
     }
 
     private Node delete(Node currentNode) {
-        if(currentNode.parent == null) { //r=root
+        if (currentNode.parent == null) { //r=root
             root = deleteNode(currentNode);
             return null;
-        }
-        else if (currentNode == currentNode.parent.left) {
+        } else if (currentNode == currentNode.parent.left) {
             currentNode.parent.left = deleteNode(currentNode);
             return currentNode.parent;
-        }
-        else {
+        } else {
             currentNode.parent.right = deleteNode(currentNode);
             return currentNode.parent;
         }
@@ -130,50 +128,47 @@ public class BinarySearchTree {
     }
 
     private Node getSuccessor(Node v) {
-        if (v==null)
+        if (v == null)
             return null;
-        Node p=v.right;
-        while(p.left!=null)
-            p=p.left;
+        Node p = v.right;
+        while (p.left != null)
+            p = p.left;
         return p;
     }
 
     private Node predecessor(Node v) {
-        if (v==null)
+        if (v == null)
             return null;
-        Node p=v.left;
-        while(p.right!=null)
-            p=p.right;
+        Node p = v.left;
+        while (p.right != null)
+            p = p.right;
         return p;
     }
 
     public void showTree() {
-        if(root==null) {
+        if (root == null) {
             return;
         }
         Deque<Node> q = new ArrayDeque<>();
         q.add(root);
         int depthLevel = 0;
         while (q.peek() != null) {
-            Deque<Node> temp = new ArrayDeque<Node> ();
-            System.out.print("Depth-level" + depthLevel+ "  :  ");
+            Deque<Node> temp = new ArrayDeque<Node>();
+            System.out.print("Depth-level" + depthLevel + "  :  ");
             while (q.peek() != null) {
                 temp.add(q.poll());
             }
             while (temp.peek() != null) {
                 Node e = temp.poll();
-                System.out.print(e.toString()+" ");
-                if(e.left != null)
+                System.out.print(e.toString() + " ");
+                if (e.left != null)
                     q.add(e.left);
-                if(e.right != null)
+                if (e.right != null)
                     q.add(e.right);
             }
             System.out.println();
             depthLevel++;
         }
-
-
-
         System.out.println(toString(root));
     }
 
@@ -182,10 +177,71 @@ public class BinarySearchTree {
     }
 
     private String inorder(Node t) {
-        if (t==null)
+        if (t == null)
             return "";
         else
-            return inorder(t.left)+" "+t.toString()+" "+inorder(t.right);
+            return inorder(t.left) + " " + t.toString() + " " + inorder(t.right);
+    }
+
+    public List<List<Character>> levelorderTraversal(Node root) {
+        Node currentNode = root;
+        List<List<Character>> resultList = new ArrayList<>();
+        Queue<Node> queue = new LinkedList<Node>();
+        if (root == null) {
+            return resultList;
+        }
+        queue.offer(currentNode);
+        while (!queue.isEmpty()) {
+            List<Character> sublist = new ArrayList<>();
+            int size = queue.size();
+
+            for (int i = 0; i < size; i++) {
+                Node tempNode = queue.peek();
+                if (tempNode.left != null) {
+                    queue.add(tempNode.left);
+                }
+                if (tempNode.right != null) {
+                    queue.add(tempNode.right);
+                }
+                sublist.add(queue.poll().key);
+            }
+            resultList.add(sublist);
+        }
+        return resultList;
+    }
+
+    public List<Character> preorderTraversal(Node root) {
+        List<Character> result = new ArrayList<>();
+        Deque<Node> stack = new ArrayDeque<>();
+        Node currentNode = root;
+        while (!stack.isEmpty() || currentNode != null) {
+            if (currentNode != null) {
+                stack.push(currentNode);
+                result.add(currentNode.key);
+                currentNode = currentNode.left;
+            } else {
+                Node node = stack.pop();
+                currentNode = node.right;
+            }
+        }
+        return result;
+    }
+
+    public List<Character> postorderTraversal(Node root) {
+        LinkedList<Character> result = new LinkedList<>();
+        Deque<Node> stack = new ArrayDeque<>();
+        Node currentNode = root;
+        while (!stack.isEmpty() || currentNode != null) {
+            if (currentNode != null) {
+                stack.push(currentNode);
+                result.addFirst(currentNode.key);
+                currentNode = currentNode.right;
+            } else {
+                Node node = stack.pop();
+                currentNode = node.left;
+            }
+        }
+        return result;
     }
 
     //////////////////////////////////////////////////////////////////
@@ -195,10 +251,9 @@ public class BinarySearchTree {
     }
 
     protected int height(Node currentNode) {
-        if(currentNode==null) {
+        if (currentNode == null) {
             return -1;
-        }
-        else {
+        } else {
             return 1 + Math.max(height(currentNode.left), height(currentNode.right));
         }
     }
@@ -209,7 +264,7 @@ public class BinarySearchTree {
     }
 
     private int IPLCount(Node r, int count) {
-        if(r==null)
+        if (r == null)
             return count;
         count++;
         int lCount = IPLCount(r.left, count);
@@ -222,10 +277,10 @@ public class BinarySearchTree {
 
     public static void main(String[] args) {
 
-        char [] data = {'M','Y','U','N','G','I','S','W'};
+        char[] data = {'M', 'Y', 'U', 'N', 'G', 'I', 'S', 'W'};
         BinarySearchTree bt = new BinarySearchTree();
 
-        for (int i=0;i<data.length;i++) {
+        for (int i = 0; i < data.length; i++) {
             bt.insert(data[i]);
             bt.showTree();
         }

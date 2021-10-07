@@ -9,8 +9,8 @@ public class DisjointSetbyRank {
   작은 트리가 큰 트리 밑에 가면 높이가 더 변하지 않기 때문이다.
    */
 
-    static int parent[];
-    static int rank[];
+    static int[] parent;
+    static int[] rank;
 
     // ① 초기화 연산 : 1~n 까지의 숫자가 주어진다고 가정하고 초기화
     public void initialize(int n) {

@@ -8,8 +8,8 @@ public class DisjointSetbyPathCompression {
     26번 줄을 참고하시면 됩니다.
      */
 
-    static int parent[];
-    static int rank[];
+    static int[] parent;
+    static int[] rank;
 
     // ① 초기화 연산 : 1~n 까지의 숫자가 주어진다고 가정하고 초기화
     public void initialize(int n) {
@@ -34,7 +34,7 @@ public class DisjointSetbyPathCompression {
         return parent[e] = find(parent[e]);
     }
 
-    // ③ 합 연산 : 전달된 두 개의 원소의 대표 집합을 동일하게 만든다.(합친다.)
+    // ③ 합 연산 : 전달된 두 개의 원소의 대표 집합을 동일하게 만든다.(합친다)
     public void union(int e1, int e2) {
 
         // 각 원소의 대표 집합을 찾아낸다.

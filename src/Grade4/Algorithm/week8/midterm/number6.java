@@ -6,6 +6,7 @@ public class number6 {
 
     static class Plate {
 
+
         public int h, r, index;
         public int area;
 

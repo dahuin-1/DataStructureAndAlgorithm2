@@ -6,6 +6,7 @@ import java.util.LinkedList;
 
 public class WeightedGraphInList {
 
+
     public class EdgeElement {
         String source ;
         String destination ;

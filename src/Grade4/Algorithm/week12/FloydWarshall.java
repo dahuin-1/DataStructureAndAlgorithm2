@@ -1,6 +1,6 @@
 package Grade4.Algorithm.week12;
 
-import java.util.Enumeration;
+//모든 정점 ~ 모든 정점
 
 public class FloydWarshall {
 

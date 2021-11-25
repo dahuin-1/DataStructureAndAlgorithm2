@@ -1,172 +1,128 @@
 package Grade4.Algorithm.week12;
 
+// A Java program for Bellman-Ford's single source shortest path algorithm.
 import java.util.*;
+import java.lang.*;
+import java.io.*;
 
-public class temp {
-
-        // Member variables of this class
-        private int dist[];
-        private Set<Integer> settled;
-        private PriorityQueue<Node> pq;
-        // Number of vertices
-        private int V;
-        List<List<Node>> adj;
-
-        // Constructor of this class
-        public temp(int V)
-        {
-
-            // This keyword refers to current object itself
-            this.V = V;
-            dist = new int[V];
-            settled = new HashSet<Integer>();
-            pq = new PriorityQueue<Node>(V, new Node());
+// A class to represent a connected, directed and weighted graph
+class temp {
+    // A class to represent a weighted edge in graph
+    class Edge {
+        int src, dest, weight;
+        Edge() {
+            src = dest = weight = 0;
         }
+    };
 
-        // Method 1
-        // Dijkstra's Algorithm
-        public void dijkstra(List<List<Node> > adj, int src)
-        {
-            this.adj = adj;
+    int V, E;
+    Edge edge[];
 
-            for (int i = 0; i < V; i++)
-                dist[i] = Integer.MAX_VALUE;
-
-            // Add source node to the priority queue
-            pq.add(new Node(src, 0));
-
-            // Distance to the source is 0
-            dist[src] = 0;
-
-            while (settled.size() != V) {
-
-                // Terminating condition check when
-                // the priority queue is empty, return
-                if (pq.isEmpty())
-                    return;
-
-                // Removing the minimum distance node
-                // from the priority queue
-                int u = pq.remove().node;
-
-                // Adding the node whose distance is
-                // finalized
-                if (settled.contains(u))
-
-                    // Continue keyword skips execution for following check
-                    continue;
-
-                // We don't have to call e_Neighbors(u)
-                // if u is already present in the settled set.
-                settled.add(u);
-
-                e_Neighbours(u);
-            }
-        }
-
-        // Method 2
-        // To process all the neighbours
-        // of the passed node
-        private void e_Neighbours(int u)
-        {
-
-            int edgeDistance = -1;
-            int newDistance = -1;
-
-            // All the neighbors of v
-            for (int i = 0; i < adj.get(u).size(); i++) {
-                Node v = adj.get(u).get(i);
-
-                // If current node hasn't already been processed
-                if (!settled.contains(v.node)) {
-                    edgeDistance = v.cost;
-                    newDistance = dist[u] + edgeDistance;
-
-                    // If new distance is cheaper in cost
-                    if (newDistance < dist[v.node])
-                        dist[v.node] = newDistance;
-
-                    // Add the current node to the queue
-                    pq.add(new Node(v.node, dist[v.node]));
-                }
-            }
-        }
-
-        // Main driver method
-        public static void main(String arg[])
-        {
-
-            int V = 5;
-            int source = 0;
-
-            // Adjacency list representation of the
-            // connected edges by declaring List class object
-            // Declaring object of type List<Node>
-            List<List<Node> > adj = new ArrayList<List<Node> >();
-
-            // Initialize list for every node
-            for (int i = 0; i < V; i++) {
-                List<Node> item = new ArrayList<Node>();
-                adj.add(item);
-            }
-
-            // Inputs for the GFG(dpq) graph
-            adj.get(0).add(new Node(1, 9));
-            adj.get(0).add(new Node(2, 6));
-            adj.get(0).add(new Node(3, 5));
-            adj.get(0).add(new Node(4, 3));
-
-            adj.get(2).add(new Node(1, 2));
-            adj.get(2).add(new Node(3, 4));
-
-            // Calculating the single source shortest path
-            temp dpq = new temp(V);
-            dpq.dijkstra(adj, source);
-
-            // Printing the shortest path to all the nodes
-            // from the source node
-            System.out.println("The shorted path from node :");
-
-            for (int i = 0; i < dpq.dist.length; i++)
-                System.out.println(source + " to " + i + " is "
-                        + dpq.dist[i]);
-        }
+    // Creates a graph with V vertices and E edges
+    temp(int v, int e) {
+        V = v;
+        E = e;
+        edge = new Edge[e];
+        for (int i = 0; i < e; ++i)
+            edge[i] = new Edge();
     }
 
-    // Class 2
-// Helper class implementing Comparator interface
-// Representing a node in the graph
-    class Node implements Comparator<Node> {
+    // The main function that finds shortest distances from src to all other vertices using Bellman-Ford algorithm.
+    // The function also detects negative weight cycle
+    void BellmanFord(temp graph, int src) {
+        int V = graph.V, E = graph.E;
+        int dist[] = new int[V];
 
-        // Member variables of this class
-        public int node;
-        public int cost;
+        // Step 1: Initialize distances from src to all other vertices as INFINITE
+        for (int i = 0; i < V; ++i)
+            dist[i] = Integer.MAX_VALUE;
+        dist[src] = 0;
 
-        // Constructors of this class
-
-        // Constructor 1
-        public Node() {}
-
-        // Constructor 2
-        public Node(int node, int cost)
-        {
-
-            // This keyword refers to current instance itself
-            this.node = node;
-            this.cost = cost;
+        // Step 2: Relax all edges |V| - 1 times.
+        // A simple shortest path from src to any other vertex can have at-most |V| - 1 edges
+        for (int i = 1; i < V; ++i) {
+            for (int j = 0; j < E; ++j) {
+                int u = graph.edge[j].src;
+                int v = graph.edge[j].dest;
+                int weight = graph.edge[j].weight;
+                if (dist[u] != Integer.MAX_VALUE && dist[u] + weight < dist[v])
+                    dist[v] = dist[u] + weight;
+            }
         }
 
-        // Method 1
-        @Override public int compare(Node node1, Node node2)
-        {
-
-            if (node1.cost < node2.cost)
-                return -1;
-
-            if (node1.cost > node2.cost)
-                return 1;
-
-            return 0;
+        // Step 3: check for negative-weight cycles. The above
+        // step guarantees shortest distances if graph doesn't
+        // contain negative weight cycle. If we get a shorter
+        // path, then there is a cycle.
+        for (int j = 0; j < E; ++j) {
+            int u = graph.edge[j].src;
+            int v = graph.edge[j].dest;
+            int weight = graph.edge[j].weight;
+            if (dist[u] != Integer.MAX_VALUE && dist[u] + weight < dist[v]) {
+                System.out.println("Graph contains negative weight cycle");
+                return;
+            }
         }
+        printArr(dist, V);
+    }
 
+    // A utility function used to print the solution
+    void printArr(int dist[], int V)
+    {
+        System.out.println("Vertex Distance from Source");
+        for (int i = 0; i < V; ++i)
+            System.out.println(i + "\t\t" + dist[i]);
+    }
+
+    // Driver method to test above function
+    public static void main(String[] args)
+    {
+        int V = 5; // Number of vertices in graph
+        int E = 8; // Number of edges in graph
+
+        temp graph = new temp(V, E);
+
+        // add edge 0-1 (or A-B in above figure)
+        graph.edge[0].src = 0;
+        graph.edge[0].dest = 1;
+        graph.edge[0].weight = -1;
+
+        // add edge 0-2 (or A-C in above figure)
+        graph.edge[1].src = 0;
+        graph.edge[1].dest = 2;
+        graph.edge[1].weight = 4;
+
+        // add edge 1-2 (or B-C in above figure)
+        graph.edge[2].src = 1;
+        graph.edge[2].dest = 2;
+        graph.edge[2].weight = 3;
+
+        // add edge 1-3 (or B-D in above figure)
+        graph.edge[3].src = 1;
+        graph.edge[3].dest = 3;
+        graph.edge[3].weight = 2;
+
+        // add edge 1-4 (or A-E in above figure)
+        graph.edge[4].src = 1;
+        graph.edge[4].dest = 4;
+        graph.edge[4].weight = 2;
+
+        // add edge 3-2 (or D-C in above figure)
+        graph.edge[5].src = 3;
+        graph.edge[5].dest = 2;
+        graph.edge[5].weight = 5;
+
+        // add edge 3-1 (or D-B in above figure)
+        graph.edge[6].src = 3;
+        graph.edge[6].dest = 1;
+        graph.edge[6].weight = 1;
+
+        // add edge 4-3 (or E-D in above figure)
+        graph.edge[7].src = 4;
+        graph.edge[7].dest = 3;
+        graph.edge[7].weight = -3;
+
+        graph.BellmanFord(graph, 0);
+    }
 }
+// Contributed by Aakash Hasija

@@ -2,6 +2,7 @@ package Grade4.Algorithm.week12;
 
 import java.util.*;
 //지난번에는 선형 탐색을 사용했기 때문에 이번에는 힙 구조를 활용하였습니다.
+//하나의 정점 ~ 다른 모든 정점
 public class DijkstraAlgorithm {
 
     int distance[];
@@ -18,7 +19,7 @@ public class DijkstraAlgorithm {
         // 엣지의 인접 목록 표현
         List<List<Node> > adj = new ArrayList<List<Node> >();
 
-        // 초기화
+        // 초기점
         for (int i = 0; i < V; i++) {
             List<Node> item = new ArrayList<Node>();
             adj.add(item);

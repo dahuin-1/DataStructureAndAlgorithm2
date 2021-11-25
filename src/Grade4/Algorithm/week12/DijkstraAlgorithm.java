@@ -37,7 +37,7 @@ public class DijkstraAlgorithm {
         // 최단 경로 계산
         DijkstraAlgorithm da = new DijkstraAlgorithm(V);
         da.dijkstra(adj, source);
-
+        System.out.println("DijkstraAlgorithm");
         for (int i = 0; i < da.distance.length; i++)
             System.out.println(source + " to " + i + " is "
                     + da.distance[i]);

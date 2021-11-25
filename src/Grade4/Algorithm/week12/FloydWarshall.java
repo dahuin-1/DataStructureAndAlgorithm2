@@ -4,7 +4,7 @@ package Grade4.Algorithm.week12;
 
 public class FloydWarshall {
 
-    static int INF = 1000000;
+    static int INF = Integer.MAX_VALUE;
 
     public static void main(String[] args) {
         FloydWarshall fw = new FloydWarshall();

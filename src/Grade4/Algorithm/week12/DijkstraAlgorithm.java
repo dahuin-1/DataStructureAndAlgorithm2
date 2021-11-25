@@ -19,7 +19,7 @@ public class DijkstraAlgorithm {
         // 엣지의 인접 목록 표현
         List<List<Node> > adj = new ArrayList<List<Node> >();
 
-        // 초기점
+        // 초기화
         for (int i = 0; i < V; i++) {
             List<Node> item = new ArrayList<Node>();
             adj.add(item);

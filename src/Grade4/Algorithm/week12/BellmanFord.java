@@ -45,13 +45,15 @@ public class BellmanFord {
             int u = graph.edge[j].src;
             int v = graph.edge[j].dest;
             int weight = graph.edge[j].weight;
-            if (distance[u] != Integer.MAX_VALUE && distance[u] + weight < distance[v]) {
+            if (distance[u] != Integer.MAX_VALUE &&
+                    distance[u] + weight < distance[v]) {
                 System.out.println("도달할수 없음");
                 return;
             }
         }
+        System.out.println("BellmanFord");
         for (int i = 0; i < V; ++i)
-            System.out.println(i + " is " + distance[i]);
+            System.out.println("vertex " + i + "'s Distance from source is " + distance[i]);
     }
 
     public static void main(String[] args)

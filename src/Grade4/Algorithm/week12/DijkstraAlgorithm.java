@@ -9,16 +9,16 @@ public class DijkstraAlgorithm {
     private PriorityQueue<Node> pq;
     // 정점개수
     private int V;
-    List<List<Node>> adjacent;
+    List<List<Node>> adjacent; //인접
 
     public static void main(String[] args) {
         int V = 5;
         int source = 0;
 
-        // 엣지의 인접 목록 표현 List<Node> 선언
+        // 엣지의 인접 목록 표현
         List<List<Node> > adj = new ArrayList<List<Node> >();
 
-        // Initialize
+        // 초기화
         for (int i = 0; i < V; i++) {
             List<Node> item = new ArrayList<Node>();
             adj.add(item);
@@ -36,8 +36,6 @@ public class DijkstraAlgorithm {
         // 최단 경로 계산
         DijkstraAlgorithm da = new DijkstraAlgorithm(V);
         da.dijkstra(adj, source);
-
-        System.out.println("The shorted path from node :");
 
         for (int i = 0; i < da.distance.length; i++)
             System.out.println(source + " to " + i + " is "

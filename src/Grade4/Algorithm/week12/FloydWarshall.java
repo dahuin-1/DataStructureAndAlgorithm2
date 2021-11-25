@@ -3,8 +3,8 @@ package Grade4.Algorithm.week12;
 //모든 정점 ~ 모든 정점
 
 public class FloydWarshall {
-
-    static int INF = Integer.MAX_VALUE;
+    //static int INF = Integer.MAX;
+    static int INF = 1000000;
 
     public static void main(String[] args) {
         FloydWarshall fw = new FloydWarshall();
@@ -35,6 +35,7 @@ public class FloydWarshall {
                 }
             }
         }
+        System.out.println("FloydWarshall");
         for (int i = 0; i < array.length; i++) {
             for (int j = 0; j < array.length; j++) {
                     System.out.println(i + " to " + j + " is "
